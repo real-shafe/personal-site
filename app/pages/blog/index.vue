@@ -15,8 +15,8 @@
 
 <style scoped>
 .blog {
-  --bg: #6e6e6e;
-  --fg: #f4f4f4;
+  --bg: var(--ink);
+  --fg: var(--paper);
 
   min-height: 100vh;
   background: var(--bg);
@@ -29,9 +29,8 @@
 
 .title {
   margin: 24px 0 40px 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-weight: 300;
+  font-family: var(--font);
+  font-weight: 800;
   font-size: 72px;
   line-height: 1;
 }
@@ -43,9 +42,8 @@
 }
 
 .link {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-weight: 300;
+  font-family: var(--font);
+  font-weight: 600;
   font-size: 56px;
   line-height: 1.05;
   color: inherit;

@@ -25,9 +25,8 @@ defineProps<{
 
 <style scoped>
 .breadcrumbs {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-weight: 300;
+  font-family: var(--font);
+  font-weight: 500;
   font-size: 18px;
 }
 

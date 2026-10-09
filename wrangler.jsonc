@@ -1,0 +1,16 @@
+// Cloudflare Workers config. Nitro merges this into the config it generates
+// at build time; main and assets point at Nitro's cloudflare-module output.
+{
+  "name": "personal-site",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-07-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./.output/public"
+  },
+  "observability": { "enabled": true },
+  "routes": [
+    { "pattern": "shafe.dev", "custom_domain": true }
+  ]
+}

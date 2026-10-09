@@ -65,8 +65,8 @@ These are the qualities of a good flashcard:
 
 <style scoped>
 .post {
-  --bg: #6e6e6e;
-  --fg: #f4f4f4;
+  --bg: var(--ink);
+  --fg: var(--paper);
 
   min-height: 100vh;
   background: var(--bg);
@@ -80,23 +80,22 @@ These are the qualities of a good flashcard:
 article {
   max-width: 800px;
   padding: 40px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-weight: 300;
+  font-family: var(--font);
+  font-weight: 400;
   font-size: 18px;
   line-height: 1.6;
 }
 
 article h1 {
   font-size: 48px;
-  font-weight: 300;
+  font-weight: 800;
   margin: 0 0 40px 0;
   line-height: 1.1;
 }
 
 article h2 {
   font-size: 32px;
-  font-weight: 300;
+  font-weight: 700;
   margin: 48px 0 24px 0;
 }
 
@@ -127,7 +126,7 @@ article pre {
 }
 
 article code {
-  font-family: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 14px;
 }
 
