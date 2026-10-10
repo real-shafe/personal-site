@@ -1,6 +1,7 @@
 <template>
   <main class="home">
-    <section ref="hero" class="hero">
+    <section ref="hero" class="hero" :class="{ particlesReady }">
+      <img class="portraitFallback" src="/images/shafe-avatar.jpg" alt="Shafe’s black-and-white portrait" width="400" height="400" fetchpriority="high">
       <canvas ref="canvas" class="field" aria-hidden="true"></canvas>
       <h1 class="srOnly">Shafe</h1>
       <div class="intro">
@@ -14,7 +15,7 @@
           <a class="link" href="https://github.com/real-shafe" target="_blank" rel="noopener noreferrer">GitHub</a>
         </nav>
       </div>
-      <p class="hint" aria-hidden="true">Move over the cards, or tap to flip them</p>
+      <p class="hint" aria-hidden="true">Move to scatter · tap to ripple</p>
     </section>
 
     <section id="projects" class="card" aria-labelledby="projects-title">
@@ -78,22 +79,27 @@ const projects = [
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 const hero = ref<HTMLElement | null>(null)
+const particlesReady = ref(false)
+let disposed = false
 let field: { stop: () => void } | null = null
 
 onMounted(async () => {
   if (!canvas.value || !hero.value) return
   try {
     // served as a static file, so keep the bundler from trying to resolve it
-    const url = '/js/card-field.js'
+    const url = '/js/portrait-particles.js'
     const mod = await import(/* @vite-ignore */ url)
-    field = await mod.start(canvas.value, { word: 'shafe', eventTarget: hero.value })
+    if (disposed || !canvas.value || !hero.value) return
+    const started = await mod.start(canvas.value, { imageUrl: '/images/shafe-avatar.jpg', eventTarget: hero.value })
+    if (disposed) { started.stop(); return }
+    field = started
+    particlesReady.value = true
   } catch (e) {
-    console.warn('Card field could not start', e)
-    hero.value.classList.add('noGl')
+    console.warn('Portrait particles could not start', e)
   }
 })
 
-onBeforeUnmount(() => field?.stop())
+onBeforeUnmount(() => { disposed = true; field?.stop() })
 </script>
 
 <style scoped>
@@ -128,17 +134,20 @@ onBeforeUnmount(() => field?.stop())
   display: block;
 }
 
-.hero.noGl::before {
-  content: 'shafe';
+.portraitFallback {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-stretch: 75%;
-  font-size: clamp(96px, 24vw, 340px);
-  color: var(--paper);
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(78vw, 48svh, 620px);
+  height: auto;
+  border-radius: 50%;
 }
+
+.particlesReady .portraitFallback {
+  visibility: hidden;
+}
+
 
 .intro {
   position: absolute;
